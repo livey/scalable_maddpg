@@ -1,0 +1,6 @@
+model_checkpoint_path: "network-1000"
+all_model_checkpoint_paths: "network-600"
+all_model_checkpoint_paths: "network-700"
+all_model_checkpoint_paths: "network-800"
+all_model_checkpoint_paths: "network-900"
+all_model_checkpoint_paths: "network-1000"

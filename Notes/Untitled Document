@@ -1,0 +1,3 @@
+The critical inputs is 
+inputs dimension = batchsize * numOfAgents * actionDimension 
+
