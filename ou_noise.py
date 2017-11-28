@@ -23,7 +23,7 @@ class OUNoise:
 
     def noise(self):
         x = self.state
-        dx = self.theta * (self.mu - x) + self.sigma * nr.randn(len(x))
+        dx = self.theta * (self.mu - x) + self.sigma * nr.randn(x.shape[0],x.shape[1])
         self.state = x + dx
         return self.state
 
