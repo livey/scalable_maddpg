@@ -1,7 +1,7 @@
 import numpy as np
 
 
-max_edge = 1.5
+max_edge = 0.4
 class Pray:
     def __init__(self):
         print('create pray')
