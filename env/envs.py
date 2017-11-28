@@ -18,16 +18,18 @@ class Environ:
 
         self.pray = Pray()
 
-    def re_create_env(self, num_agents):
+    def re_create_env(self, num_agents=4):
         self.num_agents = num_agents
+
         self.env, \
         self.current_obs \
             = self.create_env(num_agents)
 
-    def create_env(self,num_agents):
-        scenario = scenarios.load('ev.py')
-        world = scenarios.make_world()
-        env = MultiAgentEnv(world)
+    def create_env(self, num_agents=3):
+        scenario = scenarios.load('ev.py').Scenario(num_agents)
+        world = scenario.make_world()
+        env = MultiAgentEnv(world, scenario.reset_world, scenario.reward, scenario.observation, info_callback=None,
+                            shared_viewer=False)
         obs_n = env.reset()
         return env, obs_n[0]
 
@@ -41,14 +43,10 @@ class Environ:
         obs_n, reward_n, done_n, _ = self.env.step(actions)
         agents_obs = obs_n[0][:self.num_agents, :]
         self.current_obs = obs_n[0]
-        return agents_obs, np.squeeze(reward_n[:self.num_agents]), done_n[:self.num_agents]
+        return agents_obs, np.squeeze(reward_n[:self.num_agents]), done_n[0]
 
     def reset(self):
         self.env.reset()
-
-    def make_new_env(self,num_agents):
-        self.num_agents = num_agents
-        self.env = self.create_env(num_agents)
 
 
     def action_transfer(self, action):
