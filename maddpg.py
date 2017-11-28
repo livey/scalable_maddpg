@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 from actor_network import ActorNetwork
-from criticnetwork import CriticNetwork
+from critic_network import CriticNetwork
 from ou_noise import OUNoise
 from replay_buffer import ReplayBuffer
 

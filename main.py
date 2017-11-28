@@ -14,7 +14,7 @@ maddpg = MaDDPG(num_agents,state_dim, action_dim)
 Env = envs.Environ(num_agents)
 obs = Env.reset()
 current_state = obs
-max_time = 5000
+max_time = 10000
 #print(current_state)
 for epoch in range(max_time):
     print('epoch',epoch)
