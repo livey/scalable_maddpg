@@ -1,3 +1,4 @@
+This part is forked from https://github.com/openai/multiagent-particle-envs
 # Multi-Agent Particle Environment
 
 A simple multi-agent particle world with a continuous observation and discrete action space, along with some basic simulated physics.
