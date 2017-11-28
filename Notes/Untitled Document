@@ -1,3 +1,9 @@
 The critical inputs is 
-inputs dimension = batchsize * numOfAgents * actionDimension 
+inputs dimension = batchsize * numOfAgents * actionDimension
+
+buid gpu support tensorflow
+https://stackoverflow.com/questions/41293077/how-to-compile-tensorflow-with-sse4-2-and-avx-instructions
+
+tensorflow import error
+https://github.com/tensorflow/tensorflow/issues/20
 
