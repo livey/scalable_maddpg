@@ -18,7 +18,7 @@ class Environ:
 
         self.pray = Pray()
 
-    def re_create_env(self,num_agents):
+    def re_create_env(self, num_agents):
         self.num_agents = num_agents
         self.env, \
         self.current_obs \
