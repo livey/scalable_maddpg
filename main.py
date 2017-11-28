@@ -29,7 +29,7 @@ for epoch in range(max_time):
         Env.re_create_env(num_agents)
         current_state = Env.reset()
 
-    if epoch> 1000:
+    if epoch % 1000==1 or epoch% 1000 == 1 or epoch%1000==2 or epoch%1000==3:
         Env.render()
 
 
