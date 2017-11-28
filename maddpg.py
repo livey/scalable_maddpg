@@ -5,6 +5,7 @@ from criticnetwork import CriticNetwork
 from ou_noise import OUNoise
 from replay_buffer import ReplayBuffer
 
+# dimension only for test 
 STATE_DIM = 3
 ACTION_DIM =2
 GAMMA = 0.99
