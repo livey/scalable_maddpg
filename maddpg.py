@@ -14,6 +14,8 @@ BATCH_SIZE = 64
 REPLAY_BUFFER_SIZE = 1000000
 REPLAY_START_SIZE = 1000
 SAVE_STEPS = 1000
+
+
 class MaDDPG:
     def __init__(self,num_agents,state_dim,action_dim):
         self.time_step = 0
@@ -132,7 +134,7 @@ class MaDDPG:
             # self.actor_network.save_network(self.time_step)
             # self.critic_network.save_network(self.time_step)
 
-            # Re-iniitialize the random process when an episode ends
+            # Re-initialize the random process when an episode ends
         if done:
             self.exploration_noise.reset()
 
@@ -145,6 +147,7 @@ class MaDDPG:
             print('Could not find old network weights')
 
     def save_network(self):
-        # do not processing under Dropbox or  exit drop box and then run
+        # do not processing under Dropbox
+        #  exit drop box then run
         print('save network...',self.time_step)
         self.saver.save(self.sess, 'saved_network/' + 'network', global_step=self.time_step)
