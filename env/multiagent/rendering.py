@@ -106,6 +106,7 @@ class Viewer(object):
             # the boundary.) So we use the buffer height/width rather
             # than the requested one.
             arr = arr.reshape(buffer.height, buffer.width, 4)
+
             arr = arr[::-1,:,0:3]
         self.window.flip()
         self.onetime_geoms = []
