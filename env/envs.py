@@ -48,8 +48,8 @@ class Environ:
         self.current_obs = obs_n[0]
         done = False
         for ii in range(self.num_agents):
-            if done_n[ii]:
-                done = True
+            if reward_n[ii]>=8:
+                done= True
         return agents_obs, np.squeeze(reward_n[:self.num_agents]), done
 
     def reset(self):
