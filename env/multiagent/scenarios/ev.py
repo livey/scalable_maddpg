@@ -136,7 +136,7 @@ class Scenario(BaseScenario):
         if shape:
             for adv in adversaries:
                 for a in agents:
-                   rew[adv.index] += 0.1/np.sqrt(np.sum(np.square(a.state.p_pos - adv.state.p_pos)))
+                   rew[adv.index] += 0.01/np.sqrt(np.sum(np.square(a.state.p_pos - adv.state.p_pos)))
         if agent.collide:
                 for ag in agents:
                     for adv in adversaries:
