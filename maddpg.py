@@ -128,7 +128,7 @@ class MaDDPG:
         if self.replay_buffer.count() > REPLAY_START_SIZE:
             self.time_step += 1
             self.train()
-            if self.time_step%SAVE_STEPS==0:
+            if self.time_step%SAVE_STEPS == 0:
                 self.save_network()
             # if self.time_step % 10000 == 0:
             # self.actor_network.save_network(self.time_step)
