@@ -57,35 +57,35 @@ class Environ:
 
 
     def action_transfer(self, action, current_obs):
-        max_edge=0.2
-        u = np.zeros((self.num_agents, 5))
+        max_edge=1
+        u = np.zeros((self.num_agents, 4))
         for i in range(self.num_agents):
 
-            movable = action[i, 0]
-            angle = action[i, 1]
-
-            if movable <= -1:
-                u[i,0] += 1
-            if movable > -1:
-                direction_x = math.cos(angle * math.pi)
-                direction_y = math.sin(angle * math.pi)
-                x=current_obs[i,0]
-                y = current_obs[i, 1]
-                if direction_x > 0:
-                    u[i, 1] += 1
-                if direction_x < 0:
-                    u[i, 2] += 1
-                if direction_y > 0:
-                    u[i, 3] += 1
-                if direction_y < 0:
-                    u[i, 4] += 1
-                if u[i,1] > 0 and x >= max_edge:
-                    u[i,1] = 0
-                if u[i,2] > 0 and x <= -max_edge:
-                    u[i,2] = 0
-                if u[i,3] > 0 and y >= max_edge:
-                    u[i,3] = 0
-                if u[i,4] > 0 and y <= -max_edge:
-                    u[i,4] = 0
+           # movable = action[i, 0]
+           # angle = action[i, 1]
+            angle=action[i,1]
+            #if movable <= -1:
+            #    u[i,0] += 1
+            #if movable > -1:
+            direction_x = math.cos(angle * math.pi)
+            direction_y = math.sin(angle * math.pi)
+            x=current_obs[i,0]
+            y = current_obs[i, 1]
+            if direction_x > 0:
+                u[i, 0] += 1
+            if direction_x < 0:
+                u[i, 1] += 1
+            if direction_y > 0:
+                u[i, 2] += 1
+            if direction_y < 0:
+                u[i, 3] += 1
+            if u[i,0] > 0 and x >= max_edge:
+                u[i,0] = 0
+            if u[i,1] > 0 and x <= -max_edge:
+                u[i,1] = 0
+            if u[i,2] > 0 and y >= max_edge:
+                u[i,2] = 0
+            if u[i,3] > 0 and y <= -max_edge:
+                u[i,3] = 0
 
         return u
