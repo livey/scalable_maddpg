@@ -19,7 +19,9 @@ SAVE_STEPS = 1000
 class MaDDPG:
     def __init__(self,num_agents,state_dim,action_dim):
         self.time_step = 0
-        self.sess = tf.InteractiveSession()
+        # use set session use GPU
+        #self.sess = tf.InteractiveSession()
+        self.sess = tf.Session(config= tf.ConfigProto(log_device_placement=True))
         self.num_agents = num_agents
         self.state_dim = state_dim
         self.action_dim = action_dim
