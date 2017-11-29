@@ -14,10 +14,10 @@ maddpg = MaDDPG(num_agents,state_dim, action_dim)
 Env = envs.Environ(num_agents)
 obs = Env.reset()
 current_state = obs
-max_time = 10000
+max_time = 100000
 #print(current_state)
 for epoch in range(max_time):
-    #print('epoch',epoch)
+    print('epoch',epoch)
     action = maddpg.noise_action(current_state)
     #print(action)
     next_state, reward, done = Env.step(action)
@@ -29,8 +29,8 @@ for epoch in range(max_time):
         Env.re_create_env(num_agents)
         current_state = Env.reset()
 
-    if epoch % 1000==1 or epoch% 1000 == 1 or epoch%1000==2 or epoch%1000==3:
-        Env.render()
+    #if epoch % 1000==1 or epoch% 1000 == 1 or epoch%1000==2 or epoch%1000==3:
+    #Env.render()
 
 
 

@@ -57,7 +57,7 @@ class Environ:
 
 
     def action_transfer(self, action, current_obs):
-        max_edge=0.4
+        max_edge=0.2
         u = np.zeros((self.num_agents, 5))
         for i in range(self.num_agents):
 
