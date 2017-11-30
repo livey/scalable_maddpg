@@ -70,6 +70,8 @@ class MaDDPG:
         # update actor target
         self.update_agents_target()
 
+        # write scale summaries
+        self.critic.write_summaries(state_batch, action_batch)
 
     def update_agents_target(self):
         for agent in self.agents:
