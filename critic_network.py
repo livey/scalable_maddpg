@@ -1,10 +1,18 @@
 import tensorflow as tf
 import numpy as np
 import math
+
+# target updating rate
 TAU = .001
 L2 = .01
 LEARNING_RATE = 1e-3
-class  CriticNetwork:
+preLayer1Size = 10
+preLayer2Size = 2
+sufLayerSize = 10
+
+
+class CriticNetwork:
+
     ''''for critic network,
     the input is the (states,actions) for every agents,
     output is the Q(s,a) value for each agents'''
@@ -32,9 +40,6 @@ class  CriticNetwork:
         self.update_target()
 
     def createQNetwork(self,stateDimension,actionDimension):
-        preLayer1Size = 10
-        preLayer2Size = 2
-        sufLayerSize = 10
         cell_units = preLayer2Size
         with tf.variable_scope('criticNetwork') as scope:
             # the input state training data  is batchSize*numOfAgents*stateDimension
@@ -192,14 +197,14 @@ class  CriticNetwork:
         ss = tf.variables_initializer(uninit_variables)
         self.sess.run(ss)
 
-    def load_network(self):
-        checkpoint = tf.train.get_checkpoint_state("saved_critic_networks")
-        if checkpoint and checkpoint.model_checkpoint_path:
-            self.saver.restore(self.sess, checkpoint.model_checkpoint_path)
-            print("Successfully loaded:", checkpoint.model_checkpoint_path)
-        else:
-            print('Could not find old network weights')
-
-    def save_network(self,time_step):
-        print('save critic-network...',time_step)
-        self.saver.save(self.sess, 'saved_critic_networks/' + 'critic-network', global_step=time_step)
+    # def load_network(self):
+    #     checkpoint = tf.train.get_checkpoint_state("saved_critic_networks")
+    #     if checkpoint and checkpoint.model_checkpoint_path:
+    #         self.saver.restore(self.sess, checkpoint.model_checkpoint_path)
+    #         print("Successfully loaded:", checkpoint.model_checkpoint_path)
+    #     else:
+    #         print('Could not find old network weights')
+    #
+    # def save_network(self,time_step):
+    #     print('save critic-network...',time_step)
+    #     self.saver.save(self.sess, 'saved_critic_networks/' + 'critic-network', global_step=time_step)
