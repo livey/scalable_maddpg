@@ -1,9 +1,10 @@
 import numpy as np
 
 
-max_edge = 0.2
+
 class Pray:
-    def __init__(self):
+    def __init__(self,max_edge):
+        self.max_edge=max_edge
         print('create pray')
 
     def action(self, obs):
@@ -28,13 +29,13 @@ class Pray:
             if np.random.random() < 0.5: u[4] += 1.0
             if sum(u) == 0:
                 u[0] += 1.0
-            if u[1] > 0 and prey_x >= max_edge:
+            if u[1] > 0 and prey_x >= self.max_edge:
                 u[1] = 0
-            if u[2] > 0 and prey_x <= -max_edge:
+            if u[2] > 0 and prey_x <= -self.max_edge:
                 u[2] = 0
-            if u[3] > 0 and prey_y >= max_edge:
+            if u[3] > 0 and prey_y >= self.max_edge:
                 u[3] = 0
-            if u[4] > 0 and prey_y <= -max_edge:
+            if u[4] > 0 and prey_y <= -self.max_edge:
                 u[4] = 0
         else:
             x = gravity_x - prey_x
@@ -47,13 +48,13 @@ class Pray:
             if y < 0: u[3] += 1
             if sum(u) == 0:
                 u[0] += 1.0
-            if u[1] > 0 and prey_x >= max_edge:
+            if u[1] > 0 and prey_x >= self.max_edge:
                 u[1] = 0
-            if u[2] > 0 and prey_x <= -max_edge:
+            if u[2] > 0 and prey_x <= -self.max_edge:
                 u[2] = 0
-            if u[3] > 0 and prey_y >= max_edge:
+            if u[3] > 0 and prey_y >= self.max_edge:
                 u[3] = 0
-            if u[4] > 0 and prey_y <= -max_edge:
+            if u[4] > 0 and prey_y <= -self.max_edge:
                 u[4] = 0
 
         return u

@@ -8,28 +8,28 @@ from pray_policy import Pray
 from multiagent.environment import MultiAgentEnv
 import multiagent.scenarios as scenarios
 
+v_test=0.1
 
-max_edge=0.2
+#max_edge=0.2
 
 class Environ:
-    def __init__(self,num_agents):
+    def __init__(self,num_agents,max_edge):
         self.num_agents = num_agents
-
+        self.max_edge=max_edge
         self.env, \
         self.current_obs \
             = self.create_env(num_agents)
 
-        self.pray = Pray()
+        self.pray = Pray(max_edge)
 
-    def re_create_env(self, num_agents=4):
-        self.num_agents = num_agents
-
+    def re_create_env(self, num_agents):
+        self.num_agents=num_agents
         self.env, \
         self.current_obs \
             = self.create_env(num_agents)
 
-    def create_env(self, num_agents=3):
-        scenario = scenarios.load('ev.py').Scenario(num_agents)
+    def create_env(self, num_agents):
+        scenario = scenarios.load('ev.py').Scenario(num_agents,self.max_edge)
         world = scenario.make_world()
         env = MultiAgentEnv(world, scenario.reset_world, scenario.reward, scenario.observation, info_callback=None,
                             shared_viewer=False)
@@ -62,7 +62,7 @@ class Environ:
 
 
     def action_transfer(self, action, current_obs):
-
+        radio=2
         u = np.zeros((self.num_agents, 5))
         for i in range(self.num_agents):
             movable = 1
@@ -84,13 +84,13 @@ class Environ:
                     u[i, 3] += direction_y
                 if direction_y < 0:
                     u[i, 4] += -direction_y
-                if u[i,1] > 0 and x >= max_edge:
-                    u[i,1] = 0
-                if u[i,2] > 0 and x <= -max_edge:
-                    u[i,2] = 0
-                if u[i,3] > 0 and y >= max_edge:
-                    u[i,3] = 0
-                if u[i,4] > 0 and y <= -max_edge:
-                    u[i,4] = 0
+                if u[i,1] > 0 and x+v_test*direction_x>= radio*self.max_edge:
+                    u[i,1] = (radio*self.max_edge-x)/v_test
+                if u[i,2] > 0 and x+v_test*direction_x <= -radio*self.max_edge:
+                   u[i,2] = -(radio*self.max_edge-x)/v_test
+                if u[i,3] > 0 and y+v_test*direction_y >= radio*self.max_edge:
+                    u[i,3] = (radio*self.max_edge-y)/v_test
+                if u[i,4] > 0 and y+v_test*direction_y <= -radio*self.max_edge:
+                   u[i,4] = -(radio*self.max_edge-y)/v_test
 
         return u

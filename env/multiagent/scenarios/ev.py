@@ -3,9 +3,13 @@ from multiagent.core import World, Agent, Landmark
 from multiagent.scenario import BaseScenario
 
 
+
+
+
 class Scenario(BaseScenario):
-    def __init__(self,numOfadversaries):
+    def __init__(self,numOfadversaries,max_edge):
         self.num_adversaries = numOfadversaries
+        self.max_edge=max_edge
         self.num_good_agents = 1
         self.num_agents = self.num_adversaries + self.num_good_agents
 
@@ -29,8 +33,8 @@ class Scenario(BaseScenario):
             agent.adversary = True if i < self.num_adversaries else False
             
             agent.size = 0.075 if agent.adversary else 0.05
-            agent.accel = 3.0 if agent.adversary else 4.0
-            #agent.accel = 20.0 if agent.adversary else 25.0
+            #agent.accel = 3.0 if agent.adversary else 4.0
+            agent.accel = 200.0 if agent.adversary else 250.0
             agent.max_speed = 1.0 if agent.adversary else 1.3
         # add landmarks
         world.landmarks = [Landmark() for i in range(num_landmarks)]
@@ -54,12 +58,12 @@ class Scenario(BaseScenario):
             landmark.color = np.array([0.25, 0.25, 0.25])
         # set random initial states
         for agent in world.agents:
-            agent.state.p_pos = np.random.uniform(-1, +1, world.dim_p)
+            agent.state.p_pos = np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
             agent.state.p_vel = np.zeros(world.dim_p)
             agent.state.c = np.zeros(world.dim_c)
         for i, landmark in enumerate(world.landmarks):
             if not landmark.boundary:
-                landmark.state.p_pos = np.random.uniform(-0.9, +0.9, world.dim_p)
+                landmark.state.p_pos = np.random.uniform(-0.9*self.max_edge, +0.9*self.max_edge, world.dim_p)
                 landmark.state.p_vel = np.zeros(world.dim_p)
 
 
@@ -143,6 +147,8 @@ class Scenario(BaseScenario):
                         if self.is_collision(ag,adv):
                             rew += 8
                             rew[adv.index] +=7
+                        if abs(adv.state.p_pos[0])>self.max_edge or abs(adv.state.p_pos[1])>self.max_edge:
+                            rew[adv.index] -= 20
                         #else:
                         #    for rueadv in adversaries:
                         #        for a in agents:
