@@ -14,7 +14,8 @@ maddpg = MaDDPG(num_agents,state_dim, action_dim)
 Env = envs.Environ(num_agents)
 obs = Env.reset()
 current_state = obs
-max_time = 1000000
+max_time = 1000001
+done_epoch =0
 #print(current_state)
 for epoch in range(max_time):
     #print('epoch',epoch)
@@ -24,16 +25,15 @@ for epoch in range(max_time):
     #print(reward)
     maddpg.perceive(current_state,action,reward,next_state,done)
     current_state = next_state
-    Env.render()
     if done:
-        print('done')
-        print('epoch', epoch)
-
+        print('done at epoch: {}'.format(epoch))
+        print('episode time', epoch - done_epoch )
+        done_epoch = epoch
         Env.re_create_env(num_agents)
         current_state = Env.reset()
 
     #if epoch % 1000==1 or epoch% 1000 == 1 or epoch%1000==2 or epoch%1000==3:
-    #    Env.render()
+    #Env.render()
 
 
 

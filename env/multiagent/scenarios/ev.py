@@ -130,7 +130,7 @@ class Scenario(BaseScenario):
     #############################
     def adversary_reward(self,agent,world):
         rew=np.zeros((self.num_adversaries,1))
-        shape=True
+        shape=False
         agents = self.good_agents(world)
         adversaries = self.adversaries(world)
         if shape:
