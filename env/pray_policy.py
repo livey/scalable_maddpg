@@ -9,7 +9,7 @@ class Pray:
     def action(self, obs):
         # ignore observation and just act based on keyboard events
 
-        length = obs.ndim
+        length = obs.shape[0]
         prey_x = obs[0, 2]
         prey_y = obs[0, 3]
         gravity_x = 0

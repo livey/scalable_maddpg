@@ -1,6 +1,6 @@
 import tensorflow as tf
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import sys
 sys.path.insert(1,'env/')
 from env import envs
@@ -9,7 +9,7 @@ from maddpg import MaDDPG
 state_dim = 4
 action_dim = 1
 
-num_agents = 4
+num_agents = 3
 maddpg = MaDDPG(num_agents,state_dim, action_dim)
 
 Env = envs.Environ(num_agents)
