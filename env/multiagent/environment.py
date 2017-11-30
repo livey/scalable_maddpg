@@ -3,6 +3,9 @@ from gym import spaces
 from gym.envs.registration import EnvSpec
 import numpy as np
 
+Cam_view=1.6
+
+
 # environment for all agents in the multiagent world
 # currently code assumes that no agents will be created/destroyed at runtime!
 class MultiAgentEnv(gym.Env):
@@ -252,7 +255,7 @@ class MultiAgentEnv(gym.Env):
         for i in range(len(self.viewers)):
             from multiagent import rendering
             # update bounds to center around agent
-            cam_range = 1.6
+            cam_range = Cam_view
             #if self.shared_viewer:
             #    pos = np.zeros(self.world.dim_p)
             #else:
