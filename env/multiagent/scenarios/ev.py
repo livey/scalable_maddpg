@@ -14,7 +14,7 @@ class Scenario(BaseScenario):
         # set any world properties first
         world.dim_c = 2
         world.agents_num=self.num_agents
-        num_landmarks =3
+        num_landmarks =0
         # add agents
         world.agents = [Agent() for i in range(self.num_agents)]
         for i, agent in enumerate(world.agents):
@@ -136,7 +136,7 @@ class Scenario(BaseScenario):
         if shape:
             for adv in adversaries:
                 for a in agents:
-                   rew[adv.index] += 0.01/np.sqrt(np.sum(np.square(a.state.p_pos - adv.state.p_pos)))
+                   rew[adv.index] -= 0.1*np.sqrt(np.sum(np.square(a.state.p_pos - adv.state.p_pos)))
         if agent.collide:
                 for ag in agents:
                     for adv in adversaries:
