@@ -13,7 +13,7 @@ ACTION_DIM =2
 GAMMA = 0.9
 BATCH_SIZE = 64
 
-REPLAY_BUFFER_SIZE = 40000
+REPLAY_BUFFER_SIZE = 100000
 REPLAY_START_SIZE = 1000
 SAVE_STEPS = 10000
 
@@ -23,7 +23,7 @@ class MaDDPG:
         self.time_step = 0
         # use set session use GPU
         #self.sess = tf.InteractiveSession()
-        self.sess = tf.Session(config= tf.ConfigProto(log_device_placement=True))
+        self.sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
         self.num_agents = num_agents
         self.state_dim = state_dim
         self.action_dim = action_dim
