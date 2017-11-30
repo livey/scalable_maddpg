@@ -1,10 +1,18 @@
 import tensorflow as tf
 import numpy as np
 import math
+
+# target updating rate
 TAU = .001
 L2 = .01
 LEARNING_RATE = 1e-3
-class  CriticNetwork:
+preLayer1Size = 10
+preLayer2Size = 2
+sufLayerSize = 10
+SUMMARY_DIR ='summaries/'
+
+class CriticNetwork:
+
     ''''for critic network,
     the input is the (states,actions) for every agents,
     output is the Q(s,a) value for each agents'''
@@ -27,14 +35,16 @@ class  CriticNetwork:
         # create training methods
         self.create_training_method()
 
+        # merge all the summaries
+
+        self.summaries_writer,\
+            self.merge_summaries = self.collect_summaries()
+
         self.init_new_variables()
 
         self.update_target()
 
     def createQNetwork(self,stateDimension,actionDimension):
-        preLayer1Size = 10
-        preLayer2Size = 2
-        sufLayerSize = 10
         cell_units = preLayer2Size
         with tf.variable_scope('criticNetwork') as scope:
             # the input state training data  is batchSize*numOfAgents*stateDimension
@@ -132,6 +142,7 @@ class  CriticNetwork:
         self.cost = tf.reduce_mean(tf.square(self.Rt - self.q_value_outputs)) + weight_decay
         self.optimizer = tf.train.AdamOptimizer(LEARNING_RATE).minimize(self.cost)
         mean_rewards = tf.reduce_mean(self.q_value_outputs)
+        tf.summary.scalar('mean_Q_value', mean_rewards)
         self.action_gradients = tf.gradients(mean_rewards, self.actionInputs)
 
     def train(self,Rt,state_batch,action_batch):
@@ -175,6 +186,15 @@ class  CriticNetwork:
             self.actionInputs: action_batch
         })
 
+    def collect_summaries(self):
+        summaries = tf.summary.merge_all()
+        summary_writer = tf.summary.FileWriter(SUMMARY_DIR, self.sess.graph)
+        return summary_writer, summaries
+
+    def collect_summary(self,state_batch, action_batch):
+        summ = self.sess.run(self.merge_summaries, feed_dict={self.stateInputs: state_batch,
+                                                              self.actionInputs: action_batch})
+        self.summaries_writer.add_summary(summ, self.time_step)
 
     def init_new_variables(self):
         '''init the new add variables, instead of all the variables
@@ -192,14 +212,14 @@ class  CriticNetwork:
         ss = tf.variables_initializer(uninit_variables)
         self.sess.run(ss)
 
-    def load_network(self):
-        checkpoint = tf.train.get_checkpoint_state("saved_critic_networks")
-        if checkpoint and checkpoint.model_checkpoint_path:
-            self.saver.restore(self.sess, checkpoint.model_checkpoint_path)
-            print("Successfully loaded:", checkpoint.model_checkpoint_path)
-        else:
-            print('Could not find old network weights')
-
-    def save_network(self,time_step):
-        print('save critic-network...',time_step)
-        self.saver.save(self.sess, 'saved_critic_networks/' + 'critic-network', global_step=time_step)
+    # def load_network(self):
+    #     checkpoint = tf.train.get_checkpoint_state("saved_critic_networks")
+    #     if checkpoint and checkpoint.model_checkpoint_path:
+    #         self.saver.restore(self.sess, checkpoint.model_checkpoint_path)
+    #         print("Successfully loaded:", checkpoint.model_checkpoint_path)
+    #     else:
+    #         print('Could not find old network weights')
+    #
+    # def save_network(self,time_step):
+    #     print('save critic-network...',time_step)
+    #     self.saver.save(self.sess, 'saved_critic_networks/' + 'critic-network', global_step=time_step)
