@@ -9,7 +9,7 @@ LEARNING_RATE = 1e-3
 preLayer1Size = 10
 preLayer2Size = 2
 sufLayerSize = 10
-
+SUMMARY_DIR ='summaries/'
 
 class CriticNetwork:
 
@@ -34,6 +34,11 @@ class CriticNetwork:
 
         # create training methods
         self.create_training_method()
+
+        # merge all the summaries
+
+        self.summaries_writer,\
+            self.merge_summaries = self.collect_summaries()
 
         self.init_new_variables()
 
@@ -137,6 +142,7 @@ class CriticNetwork:
         self.cost = tf.reduce_mean(tf.square(self.Rt - self.q_value_outputs)) + weight_decay
         self.optimizer = tf.train.AdamOptimizer(LEARNING_RATE).minimize(self.cost)
         mean_rewards = tf.reduce_mean(self.q_value_outputs)
+        tf.summary.scalar('mean_Q_value', mean_rewards)
         self.action_gradients = tf.gradients(mean_rewards, self.actionInputs)
 
     def train(self,Rt,state_batch,action_batch):
@@ -180,6 +186,15 @@ class CriticNetwork:
             self.actionInputs: action_batch
         })
 
+    def collect_summaries(self):
+        summaries = tf.summary.merge_all()
+        summary_writer = tf.summary.FileWriter(SUMMARY_DIR, self.sess.graph)
+        return summary_writer, summaries
+
+    def collect_summary(self,state_batch, action_batch):
+        summ = self.sess.run(self.merge_summaries, feed_dict={self.stateInputs: state_batch,
+                                                              self.actionInputs: action_batch})
+        self.summaries_writer.add_summary(summ, self.time_step)
 
     def init_new_variables(self):
         '''init the new add variables, instead of all the variables
