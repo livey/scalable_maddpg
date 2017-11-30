@@ -8,12 +8,14 @@ from replay_buffer import ReplayBuffer
 # dimension only for test 
 STATE_DIM = 3
 ACTION_DIM =2
-GAMMA = 0.99
+
+# discout
+GAMMA = 0.9
 BATCH_SIZE = 64
 
-REPLAY_BUFFER_SIZE = 1000000
+REPLAY_BUFFER_SIZE = 10000
 REPLAY_START_SIZE = 1000
-SAVE_STEPS = 1000
+SAVE_STEPS = 10000
 
 
 class MaDDPG:
@@ -64,6 +66,9 @@ class MaDDPG:
 
         # update target network
         self.critic.update_target()
+
+        # update actor target
+        self.update_agents_target()
 
 
     def update_agents_target(self):
