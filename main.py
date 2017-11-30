@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 import sys
 sys.path.insert(1,'env/')
 from env import envs
@@ -17,6 +18,7 @@ current_state = obs
 max_time = 1000001
 done_epoch =0
 #print(current_state)
+catch_time = []
 for epoch in range(max_time):
     #print('epoch',epoch)
     action = maddpg.noise_action(current_state)
@@ -27,7 +29,9 @@ for epoch in range(max_time):
     current_state = next_state
     if done:
         print('done at epoch: {}'.format(epoch))
-        print('episode time', epoch - done_epoch )
+        inter = epoch - done_epoch
+        catch_time.append(inter)
+        print('episode time',  inter)
         done_epoch = epoch
         Env.re_create_env(num_agents)
         current_state = Env.reset()
@@ -36,4 +40,5 @@ for epoch in range(max_time):
     #Env.render()
 
 
-
+plt.plot(catch_time)
+plt.show()
