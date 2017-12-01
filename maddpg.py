@@ -28,6 +28,7 @@ class MaDDPG:
         self.state_dim = state_dim
         self.action_dim = action_dim
         self.agents = self.create_multi_agents(self.sess,num_agents,self.state_dim,self.action_dim)
+        # make sure create Criticnetwork later, summarise mean Q value inside
         self.critic = CriticNetwork(self.sess,state_dim,action_dim)
         self.exploration_noise = OUNoise((self.num_agents,action_dim))
         self.replay_buffer = ReplayBuffer(REPLAY_BUFFER_SIZE)
@@ -64,7 +65,7 @@ class MaDDPG:
         q_gradients_batch = self.critic.gradients(state_batch,action_batch)
         self.train_agents(q_gradients_batch,state_batch)
 
-        # update target network
+        # update critic target network
         self.critic.update_target()
 
         # update actor target
@@ -115,6 +116,14 @@ class MaDDPG:
         for ii in range(self.num_agents):
             action[ii,:] = self.agents[ii].action(state[ii,:])
         return action
+
+    def actions(self,state_batch):
+        #state = batch_size*numOfagents*state_dim
+        #actions = batch_size*numOfagents*action_dim
+        actions = np.zeros((BATCH_SIZE, self.num_agents, self.action_dim))
+        for ii in range(self.num_agents):
+            actions[:,ii,:] = self.agents[ii].actions(state_batch[:,ii,:])
+        return actions
 
     def target_actions(self,state_batch):
         # the state size  is batch_size* num_agents * state_dimension
