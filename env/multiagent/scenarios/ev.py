@@ -1,6 +1,7 @@
 import numpy as np
 from multiagent.core import World, Agent, Landmark
 from multiagent.scenario import BaseScenario
+import math
 
 
 
@@ -35,7 +36,7 @@ class Scenario(BaseScenario):
             agent.size = 0.075 if agent.adversary else 0.05
             #agent.accel = 3.0 if agent.adversary else 4.0
             agent.accel = 200.0 if agent.adversary else 250.0
-            agent.max_speed = 1.0 if agent.adversary else 1.3
+            agent.max_speed = 0.2 if agent.adversary else 0.015
         # add landmarks
         world.landmarks = [Landmark() for i in range(num_landmarks)]
         for i, landmark in enumerate(world.landmarks):
@@ -147,8 +148,8 @@ class Scenario(BaseScenario):
                         if self.is_collision(ag,adv):
                             rew += 8
                             rew[adv.index] +=7
-                        if abs(adv.state.p_pos[0])>self.max_edge or abs(adv.state.p_pos[1])>self.max_edge:
-                            rew[adv.index] -= 20
+        if abs(adv.state.p_pos[0])>self.max_edge or abs(adv.state.p_pos[1])>self.max_edge:
+            rew[adv.index] -= 20
                         #else:
                         #    for rueadv in adversaries:
                         #        for a in agents:
@@ -160,7 +161,7 @@ class Scenario(BaseScenario):
     #
     ##############################
     def observation(self,agent,world):
-        global_observation=np.zeros((self.num_agents-1,2*world.dim_p))
+        global_observation=np.zeros((self.num_agents-1,2*world.dim_p+1))
         agents = self.good_agents(world)
         adversaries = self.adversaries(world)
         for ag in adversaries:
@@ -170,6 +171,11 @@ class Scenario(BaseScenario):
             for j in range(0,self.num_agents-1):
                 for i in range(world.dim_p,2*world.dim_p):
                     global_observation[j,i]= a.state.p_pos[i-world.dim_p]
+        for j in range(0,self.num_agents-1):
+            x=global_observation[j,0]-global_observation[j,2]
+            y=global_observation[j,1]-global_observation[j,3]
+            theta=np.arctan2(y,x)
+            global_observation[j,2*world.dim_p]=theta
         #n = world.dim_p*(self.num_agents-1)*2
         #G = np.reshape(global_observation,[n])
         G=global_observation
