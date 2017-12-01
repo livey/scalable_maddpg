@@ -22,7 +22,7 @@ max_time = 1000
 #print(current_state)
 for epoch in range(max_time):
     print('epoch',epoch)
-    action = maddpg.noise_action(current_state)
+    action = maddpg.action(current_state)
     #print(action)
     next_state, reward, done = Env.step(action)
     #print(reward)
