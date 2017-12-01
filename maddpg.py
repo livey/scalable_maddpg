@@ -62,8 +62,9 @@ class MaDDPG:
         self.critic.train(gt,state_batch,action_batch)
 
         # update policy using the sampling gradients
-        q_gradients_batch = self.critic.gradients(state_batch,action_batch)
-        self.train_agents(q_gradients_batch,state_batch)
+        actions_for_grad = self.actions(state_batch)
+        q_gradients_batch = self.critic.gradients(state_batch,actions_for_grad)
+        self.train_agents(q_gradients_batch, state_batch)
 
         # update critic target network
         self.critic.update_target()
