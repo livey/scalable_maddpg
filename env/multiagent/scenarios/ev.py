@@ -36,7 +36,7 @@ class Scenario(BaseScenario):
             agent.size = 0.075 if agent.adversary else 0.05
             #agent.accel = 3.0 if agent.adversary else 4.0
             agent.accel = 200.0 if agent.adversary else 250.0
-            agent.max_speed = 0.2 if agent.adversary else 0.015
+            agent.max_speed = 0.2 if agent.adversary else 0.1
         # add landmarks
         world.landmarks = [Landmark() for i in range(num_landmarks)]
         for i, landmark in enumerate(world.landmarks):
@@ -59,7 +59,13 @@ class Scenario(BaseScenario):
             landmark.color = np.array([0.25, 0.25, 0.25])
         # set random initial states
         for agent in world.agents:
-            agent.state.p_pos = np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
+            #agent.state.p_pos = np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
+            #fix position
+            agent.state.p_pos=np.zeros(world.dim_p)
+            agent.state.p_pos[0]=np.power(-1,agent.index)*0.3*agent.index*self.max_edge
+            agent.state.p_pos[1] = -np.power(-1, agent.index) * 0.3 * agent.index * self.max_edge
+
+
             agent.state.p_vel = np.zeros(world.dim_p)
             agent.state.c = np.zeros(world.dim_c)
         for i, landmark in enumerate(world.landmarks):
