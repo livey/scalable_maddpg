@@ -135,7 +135,8 @@ class MaDDPG:
 
     def noise_action(self,state):
         action = self.action(state)
-        return action+ self.exploration_noise.noise()
+        # clip the action, action \in [-1,+1]
+        return np.clip(action+ self.exploration_noise.noise(), -1, 1)
 
     def close_session(self):
         self.sess.close()
