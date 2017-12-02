@@ -62,8 +62,8 @@ class Scenario(BaseScenario):
             #agent.state.p_pos = np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
             #fix position
             agent.state.p_pos=np.zeros(world.dim_p)
-            agent.state.p_pos[0]=np.power(-1,agent.index)*0.3*agent.index*self.max_edge
-            agent.state.p_pos[1] = -np.power(-1, agent.index) * 0.3 * agent.index * self.max_edge
+            agent.state.p_pos[0]=np.power(-1,agent.index)*0.6*agent.index*self.max_edge
+            agent.state.p_pos[1] = -np.power(-1, agent.index) * 0.6 * agent.index * self.max_edge
 
 
             agent.state.p_vel = np.zeros(world.dim_p)
@@ -111,31 +111,7 @@ class Scenario(BaseScenario):
             main_reward = Rewa[agent.index]
         return main_reward
 
-    #def agent_reward(self, agent, world):
-    #    # Agents are negatively rewarded if caught by adversaries
-    #    rew = 0
-      #  shape = False
-      #  adversaries = self.adversaries(world)
-      #  if shape:  # reward can optionally be shaped (increased reward for increased distance from adversary)
-      #      for adv in adversaries:
-      #          rew += 0.1 * np.sqrt(np.sum(np.square(agent.state.p_pos - adv.state.p_pos)))
-      #  if agent.collide:
-      #      for a in adversaries:
-      #          if self.is_collision(a, agent):
-      #              rew -= 10
 
-        # agents are penalized for exiting the screen, so that they can be caught by the adversaries
-        #def bound(x):
-        #    if x < 0.9:
-        #        return 0
-        #    if x < 1.0:
-        #        return (x - 0.9) * 10
-        #    return min(np.exp(2 * x - 2), 10)
-        #for p in range(world.dim_p):
-        #    x = abs(agent.state.p_pos[p])
-        #    rew -= bound(x)
-
-        #return rew
 
     
     #############################
@@ -154,12 +130,9 @@ class Scenario(BaseScenario):
                         if self.is_collision(ag,adv):
                             rew += 8
                             rew[adv.index] +=7
-        if abs(adv.state.p_pos[0])>self.max_edge or abs(adv.state.p_pos[1])>self.max_edge:
-            rew[adv.index] -= 20
-                        #else:
-                        #    for rueadv in adversaries:
-                        #        for a in agents:
-                        #            rew[adv.index] += 0.1 / np.sqrt(np.sum(np.square(a.state.p_pos - adv.state.p_pos)))
+        for adv in adversaries:
+            if abs(adv.state.p_pos[0])>self.max_edge or abs(adv.state.p_pos[1])>self.max_edge:
+                rew[adv.index] -= 100
         return rew
     
     ##
