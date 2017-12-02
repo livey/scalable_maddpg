@@ -47,7 +47,7 @@ class Environ:
         actions = np.vstack((agent_actions,pray_action))
         #print(actions)
         obs_n, reward_n, done_n, _ = self.env.step(actions)
-        #agents_obs = obs_n[0][:self.num_agents, :]
+        agents_obs = obs_n[0][:self.num_agents, :]
         self.current_obs = obs_n[0]
 
         done = False
@@ -57,9 +57,9 @@ class Environ:
             dis=np.sqrt(np.square(x_dis)+np.square(y_dis))
             if dis<=R_ad+R_prey:
                 done= True
-            #if abs(self.current_obs[ii,0])>self.max_edge or abs(self.current_obs[ii,1])>self.max_edge:
-            #    done=True
-        agents_obs=self.current_obs[:self.num_agents, :]
+            if abs(self.current_obs[ii,0])>self.max_edge or abs(self.current_obs[ii,1])>self.max_edge:
+                done=True
+        #agents_obs=self.current_obs[:self.num_agents, :]
         return agents_obs, np.squeeze(reward_n[:self.num_agents]), done
 
     def reset(self):
@@ -78,8 +78,8 @@ class Environ:
             if movable > -1:
                 direction_x = math.cos(angle * math.pi)
                 direction_y = math.sin(angle * math.pi)
-                x=current_obs[i,0]
-                y = current_obs[i, 1]
+                #x=current_obs[i,0]
+                #y = current_obs[i, 1]
 
                 if direction_x > 0:
                       u[i, 1] += direction_x
@@ -90,18 +90,32 @@ class Environ:
                 if direction_y < 0:
                       u[i, 4] += -direction_y
 
-                edge_bound=radio*self.max_edge
-                if u[i,1] > 0 and x+v_test*direction_x> edge_bound:
-                     u[i,1] = (2*edge_bound-2*x-v_test*direction_x)/v_test
+                # edge_bound=radio*self.max_edge
+                # call_back = False
+                # if u[i,1] > 0 and x+v_test*direction_x> edge_bound:
+                #      if call_back:
+                #         u[i,1] = (2*edge_bound-2*x-v_test*direction_x)/v_test
+                #      else:
+                #         u[i,1]= (edge_bound-x)/v_test
+                #
+                # if u[i,2] > 0 and x+v_test*direction_x < -edge_bound:
+                #     if call_back:
+                #       u[i,2] = -(2*edge_bound-2*x-v_test*direction_x)/v_test
+                #     else:
+                #       u[i,2]= -(edge_bound-x)/v_test
+                #
+                # if u[i,3] > 0 and y+v_test*direction_y > edge_bound:
+                #     if call_back:
+                #        u[i,3] = (2*edge_bound-2*y-v_test*direction_y)/v_test
+                #     else:
+                #        u[i,3]= (edge_bound-y)/v_test
+                #
+                # if u[i,4] > 0 and y+v_test*direction_y < -edge_bound:
+                #     if call_back:
+                #       u[i,4] = -(2*edge_bound-2*y-v_test*direction_y)/v_test
+                #     else:
+                #       u[i,4] = -(edge_bound-y)/v_test
 
-                if u[i,2] > 0 and x+v_test*direction_x < -edge_bound:
-                    u[i,2] = -(radio*self.max_edge-x)/v_test
-
-                if u[i,3] > 0 and y+v_test*direction_y > edge_bound:
-                     u[i,3] = (radio*self.max_edge-y)/v_test
-
-                if u[i,4] > 0 and y+v_test*direction_y < -edge_bound:
-                    u[i,4] = -(radio*self.max_edge-y)/v_test
         return u
 
     def predator(self):
