@@ -11,3 +11,6 @@ cudnn 6.0 https://developer.nvidia.com/rdp/cudnn-download
 
 config X-server with nvidia driver
 http://uk.download.nvidia.com/XFree86/Linux-x86_64/256.44/README/editxconfig.html
+
+dynamic drawing 
+https://stackoverflow.com/questions/10944621/dynamically-updating-plot-in-matplotlib
