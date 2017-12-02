@@ -178,8 +178,8 @@ class Scenario(BaseScenario):
                 for i in range(world.dim_p,2*world.dim_p):
                     global_observation[j,i]= a.state.p_pos[i-world.dim_p]
         for j in range(0,self.num_agents-1):
-            x=global_observation[j,0]-global_observation[j,2]
-            y=global_observation[j,1]-global_observation[j,3]
+            x=global_observation[j,2]-global_observation[j,0]
+            y=global_observation[j,3]-global_observation[j,1]
             theta=np.arctan2(y,x)
             global_observation[j,2*world.dim_p]=theta
         #n = world.dim_p*(self.num_agents-1)*2
