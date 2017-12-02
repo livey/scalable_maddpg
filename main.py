@@ -6,7 +6,7 @@ sys.path.insert(1,'env/')
 from env import envs
 from maddpg import MaDDPG
 
-state_dim = 4
+state_dim = 5
 action_dim = 1
 max_edge=0.2
 
