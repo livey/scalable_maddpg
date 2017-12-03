@@ -73,14 +73,14 @@ class MaDDPG:
         self.update_agents_target()
 
     def summary(self):
+        if self.time_step > SUMMARY_BATCH_SIZE:
+            mini_batch = self.replay_buffer.get_batch(SUMMARY_BATCH_SIZE)
+            state_batch = np.zeros((SUMMARY_BATCH_SIZE, self.num_agents, self.state_dim))
+            for ii in range(SUMMARY_BATCH_SIZE):
+                state_batch[ii,:,:] = mini_batch[ii][0]
 
-        mini_batch = self.replay_buffer.get_batch(SUMMARY_BATCH_SIZE)
-        state_batch = np.zeros((SUMMARY_BATCH_SIZE, self.num_agents, self.state_dim))
-        for ii in range(SUMMARY_BATCH_SIZE):
-            state_batch[ii,:,:] = mini_batch[ii][0]
-
-        actions_for_summary = self.actions(state_batch)
-        self.critic.write_summaries(state_batch, actions_for_summary)
+            actions_for_summary = self.actions(state_batch)
+            self.critic.write_summaries(state_batch, actions_for_summary)
 
 
 
@@ -130,7 +130,8 @@ class MaDDPG:
     def actions(self,state_batch):
         #state = batch_size*numOfagents*state_dim
         #actions = batch_size*numOfagents*action_dim
-        actions = np.zeros((BATCH_SIZE, self.num_agents, self.action_dim))
+        batch_size = state_batch.shape[0]
+        actions = np.zeros((batch_size, self.num_agents, self.action_dim))
         for ii in range(self.num_agents):
             actions[:,ii,:] = self.agents[ii].actions(state_batch[:,ii,:])
         return actions
@@ -145,7 +146,7 @@ class MaDDPG:
     def noise_action(self,state):
         action = self.action(state)
         # clip the action, action \in [-1,+1]
-        return np.clip(action+ self.exploration_noise.noise(), -1, 1)
+        return np.clip(action + self.exploration_noise.noise(), -1, 1)
 
     def close_session(self):
         self.sess.close()
