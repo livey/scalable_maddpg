@@ -123,13 +123,13 @@ class Scenario(BaseScenario):
         if shape:
             for adv in adversaries:
                 for a in agents:
-                   rew[adv.index] -= 10*np.sqrt(np.square(a.state.p_pos[0] - adv.state.p_pos[0])+np.square(a.state.p_pos[1] - adv.state.p_pos[1]))
+                   rew[adv.index] -= 0.1*np.sqrt(np.square(a.state.p_pos[0] - adv.state.p_pos[0])+np.square(a.state.p_pos[1] - adv.state.p_pos[1]))
         if agent.collide:
                 for ag in agents:
                     for adv in adversaries:
                         if self.is_collision(ag,adv):
-                            rew += 8
-                            rew[adv.index] +=7
+                            rew += 0
+                            rew[adv.index] += 0
         for adv in adversaries:
             if abs(adv.state.p_pos[0])>self.max_edge or abs(adv.state.p_pos[1])>self.max_edge:
                 rew[adv.index] -= 10
