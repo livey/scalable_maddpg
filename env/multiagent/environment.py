@@ -76,7 +76,7 @@ class MultiAgentEnv(gym.Env):
         if self.shared_viewer:
             self.viewers = [None]
         else:
-            self.viewers = [None] * self.n
+            self.viewers = [None]
         self._reset_render()
 
     def _step(self, action_n):
