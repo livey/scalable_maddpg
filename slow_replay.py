@@ -6,19 +6,20 @@ from env import envs
 from maddpg import MaDDPG
 
 # load the pre-trained network and plays the video slowly
-state_dim = 4
+state_dim = 5
 action_dim = 1
+max_edge=0.3
 
-num_agents = 4
+num_agents = 1
 maddpg = MaDDPG(num_agents,state_dim, action_dim)
 
 # load saved network
 maddpg.load_network()
 
-Env = envs.Environ(num_agents)
+Env = envs.Environ(num_agents,max_edge)
 obs = Env.reset()
 current_state = obs
-max_time = 1000
+max_time = 10000
 #print(current_state)
 for epoch in range(max_time):
     print('epoch',epoch)
@@ -37,5 +38,4 @@ for epoch in range(max_time):
     time.sleep(.2)
 
 maddpg.close_session()
-
 
