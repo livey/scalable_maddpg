@@ -8,9 +8,9 @@ from pray_policy import Pray
 from multiagent.environment import MultiAgentEnv
 import multiagent.scenarios as scenarios
 
-v_test=0.02
-R_ad=0.075
-R_prey=0.05
+
+R_ad=0.2
+R_prey=0.2
 
 #max_edge=0.2
 
@@ -31,7 +31,7 @@ class Environ:
             = self.create_env(num_agents)
 
     def create_env(self, num_agents):
-        scenario = scenarios.load('ev.py').Scenario(num_agents,self.max_edge)
+        scenario = scenarios.load('new_env.py').Scenario(num_agents,self.max_edge)
         world = scenario.make_world()
         env = MultiAgentEnv(world, scenario.reset_world, scenario.reward, scenario.observation, info_callback=None,
                             shared_viewer=False)
