@@ -50,6 +50,7 @@ class Environ:
         agents_obs = obs_n[0][:self.num_agents, :]
         self.current_obs = obs_n[0]
 
+        rewards = np.squeeze(reward_n[:self.num_agents])
         done = False
         for ii in range(self.num_agents):
             x_dis=self.current_obs[ii,0]-self.current_obs[ii,2]
@@ -59,8 +60,10 @@ class Environ:
                 done= True
             if abs(self.current_obs[ii,0])>self.max_edge or abs(self.current_obs[ii,1])>self.max_edge:
                 done=True
+                rewards[:]=-10
+
         #agents_obs=self.current_obs[:self.num_agents, :]
-        return agents_obs, np.squeeze(reward_n[:self.num_agents]), done
+        return agents_obs, rewards, done
 
     def reset(self):
         return self.env.reset()[0]
