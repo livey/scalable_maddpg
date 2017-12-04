@@ -3,6 +3,10 @@ from multiagent.core import World, Agent, Landmark
 from multiagent.scenario import BaseScenario
 import math
 
+agent_size = .2
+adver_size = .2
+agent_speed = .1
+adver_speed = .08
 
 class Scenario(BaseScenario):
     def __init__(self, numOfadversaries, max_edge):
@@ -30,10 +34,10 @@ class Scenario(BaseScenario):
             ##########################
             agent.adversary = True if i < self.num_adversaries else False
 
-            agent.size = 0.075 if agent.adversary else 0.05
+            agent.size = agent_size if agent.adversary else adver_size
             # agent.accel = 3.0 if agent.adversary else 4.0
             agent.accel = 200.0 if agent.adversary else 250.0
-            agent.max_speed = 0.2 if agent.adversary else 0.1
+            agent.max_speed = agent_speed*10 if agent.adversary else adver_speed*10 #v = speed /10
         # add landmarks
         world.landmarks = [Landmark() for i in range(num_landmarks)]
         for i, landmark in enumerate(world.landmarks):
@@ -56,16 +60,19 @@ class Scenario(BaseScenario):
         # set random initial states
         for agent in world.agents:
             agent.state.p_pos = np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
+            agent.state.p_vel = np.zeros(world.dim_p)
+            agent.state.c = np.zeros(world.dim_c)
         ####set not collided
         flag=True
         ag = self.good_agents(world)
         ad = self.adversaries(world)
+
         while flag:
             ii=0
             for a in ag:
                 for aa in ad:
                     dis=np.sqrt(np.sum(np.square(aa.state.p_pos-a.state.p_pos)))
-                    if dis<0.075+0.05:
+                    if dis<adver_size+agent_size:
                         aa.state.p_pos=np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
                     else:
                         ii=ii+1
@@ -80,8 +87,7 @@ class Scenario(BaseScenario):
             #agent.state.p_pos[0] = np.power(-1, agent.index) * 0.6 * agent.index * self.max_edge
             #agent.state.p_pos[1] = -np.power(-1, agent.index) * 0.6 * agent.index * self.max_edge
 
-            agent.state.p_vel = np.zeros(world.dim_p)
-            agent.state.c = np.zeros(world.dim_c)
+
         for i, landmark in enumerate(world.landmarks):
             if not landmark.boundary:
                 landmark.state.p_pos = np.random.uniform(-0.9 * self.max_edge, +0.9 * self.max_edge, world.dim_p)
@@ -141,7 +147,7 @@ class Scenario(BaseScenario):
                         rew[adv.index] += 0
         for adv in adversaries:
             if abs(adv.state.p_pos[0]) > self.max_edge or abs(adv.state.p_pos[1]) > self.max_edge:
-                rew[adv.index] -= 10
+                rew[adv.index] = -10
         return rew
 
     ##
