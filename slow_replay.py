@@ -10,7 +10,7 @@ state_dim = 5
 action_dim = 1
 max_edge=1
 
-num_agents = 1
+num_agents = 3
 maddpg = MaDDPG(num_agents,state_dim, action_dim)
 
 # load saved network
@@ -30,7 +30,7 @@ for epoch in range(max_time):
     #maddpg.perceive(current_state,action,reward,next_state,done)
     current_state = next_state
     if done:
-        print('done')
+        print('done!!!!, reward : {}'.format(reward))
         #Env.re_create_env(num_agents)
         current_state = Env.reset()
 

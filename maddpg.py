@@ -72,7 +72,7 @@ class MaDDPG:
         # update actor target
         self.update_agents_target()
 
-    def summary(self):
+    def summary(self, record_num):
         if self.time_step > SUMMARY_BATCH_SIZE:
             mini_batch = self.replay_buffer.get_batch(SUMMARY_BATCH_SIZE)
             state_batch = np.zeros((SUMMARY_BATCH_SIZE, self.num_agents, self.state_dim))
@@ -80,7 +80,7 @@ class MaDDPG:
                 state_batch[ii,:,:] = mini_batch[ii][0]
 
             actions_for_summary = self.actions(state_batch)
-            self.critic.write_summaries(state_batch, actions_for_summary)
+            self.critic.write_summaries(state_batch, actions_for_summary, record_num)
 
 
 

@@ -47,7 +47,7 @@ for episode in range(max_episode):
         if done:
             print('Done!!!!!!!!!!!! at epoch{} , reward:{}'.format(epoch,reward))
             # add summary for each episode
-            maddpg.summary()
+            maddpg.summary(episode)
             break
     if epoch ==max_epoch-1:
         print('Time up >>>>>>>>>>>>>>')

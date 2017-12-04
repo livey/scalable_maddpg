@@ -191,10 +191,10 @@ class CriticNetwork:
         summary_writer = tf.summary.FileWriter(SUMMARY_DIR, self.sess.graph)
         return summary_writer, summaries
 
-    def write_summaries(self,state_batch, action_batch):
+    def write_summaries(self,state_batch, action_batch, record_num):
         summ = self.sess.run(self.merge_summaries, feed_dict={self.stateInputs: state_batch,
                                                               self.actionInputs: action_batch})
-        self.summaries_writer.add_summary(summ, self.time_step)
+        self.summaries_writer.add_summary(summ, record_num)
 
     def init_new_variables(self):
         '''init the new add variables, instead of all the variables

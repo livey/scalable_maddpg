@@ -6,7 +6,7 @@ import math
 agent_size = .2
 adver_size = .2
 agent_speed = .1
-adver_speed = .08
+adver_speed = .3
 
 class Scenario(BaseScenario):
     def __init__(self, numOfadversaries, max_edge):
