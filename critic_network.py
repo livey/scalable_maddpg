@@ -7,7 +7,7 @@ TAU = .001
 L2 = .01
 LEARNING_RATE = 1e-3
 preLayer1Size = 10
-preLayer2Size = 2
+preLayer2Size = 10
 sufLayerSize = 10
 SUMMARY_DIR ='summaries/'
 
