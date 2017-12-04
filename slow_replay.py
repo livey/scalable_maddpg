@@ -8,7 +8,7 @@ from maddpg import MaDDPG
 # load the pre-trained network and plays the video slowly
 state_dim = 5
 action_dim = 1
-max_edge=0.3
+max_edge=1
 
 num_agents = 1
 maddpg = MaDDPG(num_agents,state_dim, action_dim)
@@ -31,7 +31,7 @@ for epoch in range(max_time):
     current_state = next_state
     if done:
         print('done')
-        Env.re_create_env(num_agents)
+        #Env.re_create_env(num_agents)
         current_state = Env.reset()
 
     Env.render()
