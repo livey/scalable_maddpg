@@ -9,8 +9,8 @@ import numpy as np
 # create multiple instances
 # https://stackoverflow.com/questions/41709207/python-create-n-number-of-class-instances
 
-LAYER1_SIZE = 40
-LAYER2_SIZE = 30
+LAYER1_SIZE = 10
+LAYER2_SIZE = 10
 LEARNING_RATE = 1e-4
 
 # target updating rate
