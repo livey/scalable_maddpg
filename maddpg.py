@@ -114,9 +114,13 @@ class MaDDPG:
             agent_name = 'agent'+ str(self.num_agents)
             self.agents.append(ActorNetwork(self.sess,self.state_dim,self.action_dim,
                                             agent_name, self.agents[-1].nets))
+
         # if add a new agent then reset the noise and replay buffer
         self.exploration_noise = OUNoise((self.num_agents, self.action_dim))
-        self.replay_buffer = ReplayBuffer(REPLAY_BUFFER_SIZE)
+        #self.replay_buffer = ReplayBuffer(REPLAY_BUFFER_SIZE)
+        self.replay_buffer.erase()
+        # reset the time step
+        self.time_step = 0
 
 
     def action(self,state): # here is action, for one state on agent, not batch_sized actions
