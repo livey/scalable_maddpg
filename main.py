@@ -10,7 +10,7 @@ state_dim = 5
 action_dim = 1
 max_edge= 1
 
-num_agents = 1
+num_agents = 3
 maddpg = MaDDPG(num_agents,state_dim, action_dim)
 
 Env = envs.Environ(num_agents,max_edge)
@@ -38,7 +38,7 @@ for episode in range(max_episode):
 
     for epoch in range(max_epoch):
         #print('epoch',epoch)
-        Env.render()
+        #Env.render()
         action = maddpg.noise_action(current_state)
         #print(action)
         next_state, reward, done = Env.step(action)
@@ -46,20 +46,9 @@ for episode in range(max_episode):
         current_state = next_state
         if done:
             print('Done!!!!!!!!!!!! at epoch{} , reward:{}'.format(epoch,reward))
-            inter = epoch - done_epoch
-            catch_time.append(inter)
             # add summary for each episode
             maddpg.summary()
             break
     if epoch ==max_epoch-1:
         print('Time up >>>>>>>>>>>>>>')
 
-
-
-
-    #if epoch % 1000==1 or epoch% 1000 == 1 or epoch%1000==2 or epoch%1000==3:
-    #Env.render()
-
-maddpg.close_session()
-plt.plot(catch_time)
-plt.show()
