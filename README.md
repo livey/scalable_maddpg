@@ -7,5 +7,5 @@ salable multi agent reinforcement learning
 - [x] fix rewards
 - [x] decrease the frequency of summaries
 - [x] rearrange main.py
-- [ ] prey boundary problem
-- [ ] modify the initial position of the agents and prey
+- [x] prey boundary problem
+- [x] modify the initial position of the agents and prey
