@@ -2,9 +2,9 @@
 salable multi agent reinforcement learning
 
 ## to do list
-1. tune L2
-2. fix environments
-3. fix rewards
+- [ ] tune L2
+- [x] fix environments
+- [x] fix rewards
 - [x] decrease the frequency of summaries
 - [x] rearrange main.py
 - [ ] prey boundary problem
