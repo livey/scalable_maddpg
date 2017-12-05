@@ -9,3 +9,4 @@ salable multi agent reinforcement learning
 - [x] rearrange main.py
 - [x] prey boundary problem
 - [x] modify the initial position of the agents and prey
+- [ ] add another network for prey
