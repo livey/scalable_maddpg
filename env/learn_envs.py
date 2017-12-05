@@ -9,8 +9,8 @@ from multiagent.environment import MultiAgentEnv
 import multiagent.scenarios as scenarios
 
 
-R_ad=0.1
-R_prey=0.1
+R_ad=0.2
+R_prey=0.2
 
 #max_edge=0.2
 
@@ -41,16 +41,24 @@ class Environ:
     def render(self):
         self.env.render()
 
-    def step(self,act_n):
+    def step(self,act_n,pray_action):
+        #########set action
         agent_actions = self.action_transfer(act_n,self.current_obs)
-        pray_action = self.pray.action(self.current_obs)
         actions = np.vstack((agent_actions,pray_action))
         #print(actions)
+
+        #implement action
         obs_n, reward_n, done_n, _ = self.env.step(actions)
+        #print(reward_n)
+
+        #set observation
         agents_obs = obs_n[0][:self.num_agents, :]
         self.current_obs = obs_n[0]
-
-        rewards = np.squeeze(reward_n[:self.num_agents])
+        prey_obs=self.preyState_transfer(self.current_obs)
+        #set reward
+        agent_rewards = np.squeeze(reward_n[:self.num_agents])
+        prey_reward = reward_n[self.num_agents]
+        #set done
         done = False
         for ii in range(self.num_agents):
             x_dis=self.current_obs[ii,0]-self.current_obs[ii,2]
@@ -58,15 +66,15 @@ class Environ:
             dis=np.sqrt(np.square(x_dis)+np.square(y_dis))
             if dis<=R_ad+R_prey:
                 done= True
-            if abs(self.current_obs[ii,0])>self.max_edge or abs(self.current_obs[ii,1])>self.max_edge:
-                done=True
-                rewards[:]=-10
-
-        #agents_obs=self.current_obs[:self.num_agents, :]
-        return agents_obs, rewards, done
+            for jj in range(4):
+                if abs(self.current_obs[ii,jj])>self.max_edge:
+                    done=True
+        return agents_obs, agent_rewards,prey_obs,prey_reward, done
 
     def reset(self):
-        return self.env.reset()[0]
+        agent_obs= self.env.reset()[0]
+        prey_obs=self.preyState_transfer(agent_obs)
+        return agent_obs,prey_obs
 
 
     def action_transfer(self, action, current_obs):
@@ -92,7 +100,6 @@ class Environ:
                       u[i, 3] += direction_y
                 if direction_y < 0:
                       u[i, 4] += -direction_y
-
                 # edge_bound=radio*self.max_edge
                 # call_back = False
                 # if u[i,1] > 0 and x+v_test*direction_x> edge_bound:
@@ -134,4 +141,13 @@ class Environ:
                 action[ii,0]=np.arctan2(y,x)
         return action
 
-
+    def preyState_transfer(self,obs):
+        num=2*(self.num_agents+1)+self.num_agents
+        observation=np.zeros(num)
+        observation[0] = obs[0, 2]
+        observation[1] = obs[0, 3]
+        for ii in range(self.num_agents):
+            observation[2 * ii + 2] = obs[ii, 0]
+            observation[2 * ii + 3] = obs[ii, 1]
+            observation[ii+2*(self.num_agents+1)]=obs[ii,4]
+        return observation
