@@ -1,6 +1,6 @@
 import numpy as np
 
-
+v_prey=0.1
 
 class Pray:
     def __init__(self,max_edge):
@@ -29,14 +29,14 @@ class Pray:
             if np.random.random() < 0.5: u[4] += 1.0
             if sum(u) == 0:
                 u[0] += 1.0
-            if u[1] > 0 and prey_x >= self.max_edge:
-                u[1] = 0
-            if u[2] > 0 and prey_x <= -self.max_edge:
-                u[2] = 0
-            if u[3] > 0 and prey_y >= self.max_edge:
-                u[3] = 0
-            if u[4] > 0 and prey_y <= -self.max_edge:
-                u[4] = 0
+            if u[1] > 0 and prey_x+v_prey >= self.max_edge:
+                u[1] = (self.max_edge-prey_x)/v_prey
+            if u[2] > 0 and prey_x-v_prey <= -self.max_edge:
+                u[2] = -(self.max_edge-prey_x)/v_prey
+            if u[3] > 0 and prey_y+v_prey >= self.max_edge:
+                u[3] = (self.max_edge-prey_y)/v_prey
+            if u[4] > 0 and prey_y-v_prey <= -self.max_edge:
+                u[4] = -(self.max_edge-prey_y)/v_prey
         else:
             x = gravity_x - prey_x
             y = gravity_y - prey_y
@@ -46,15 +46,13 @@ class Pray:
             if x > 0: u[2] += 1
             if y > 0: u[4] += 1
             if y < 0: u[3] += 1
-            if sum(u) == 0:
-                u[0] += 1.0
-            if u[1] > 0 and prey_x >= self.max_edge:
-                u[1] = 0
-            if u[2] > 0 and prey_x <= -self.max_edge:
-                u[2] = 0
-            if u[3] > 0 and prey_y >= self.max_edge:
-                u[3] = 0
-            if u[4] > 0 and prey_y <= -self.max_edge:
-                u[4] = 0
+            if u[1] > 0 and prey_x+v_prey >= self.max_edge:
+                u[1] = (self.max_edge-prey_x)/v_prey
+            if u[2] > 0 and prey_x-v_prey <= -self.max_edge:
+                u[2] = -(self.max_edge-prey_x)/v_prey
+            if u[3] > 0 and prey_y+v_prey >= self.max_edge:
+                u[3] = (self.max_edge-prey_y)/v_prey
+            if u[4] > 0 and prey_y-v_prey <= -self.max_edge:
+                u[4] = -(self.max_edge-prey_y)/v_prey
 
         return u
