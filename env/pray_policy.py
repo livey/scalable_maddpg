@@ -26,7 +26,7 @@ class Pray:
         theta=np.arctan2(y,x)
         proba = np.random.random()
         u = np.zeros(5)
-        if proba > 0.3:
+        if proba < 0.1:
             theta=2 * np.random.random() - 1
             dis_x = math.cos(theta * math.pi)
             dis_y = math.sin(theta * math.pi)
@@ -40,7 +40,7 @@ class Pray:
                 u[4]=-dis_y
             if sum(u)==0:
                 u[0]=1
-        elif proba >0.8:
+        elif proba <0.8 and proba>=0.1:
             dis_x = math.cos(theta * math.pi)
             dis_y = math.sin(theta * math.pi)
             if dis_x > 0:
@@ -54,7 +54,7 @@ class Pray:
             if sum(u) == 0:
                 u[0] = 1
 
-        elif proba >0.9:
+        elif proba >=0.8 and proba<0.9:
             theta=theta+math.pi/2
             dis_x = math.cos(theta * math.pi)
             dis_y = math.sin(theta * math.pi)
