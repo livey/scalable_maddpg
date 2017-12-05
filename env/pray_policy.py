@@ -69,7 +69,7 @@ class Pray:
             if sum(u) == 0:
                 u[0] = 1
 
-        else:
+        elif proba >0.9:
             theta = theta - math.pi / 2
             dis_x = math.cos(theta * math.pi)
             dis_y = math.sin(theta * math.pi)
