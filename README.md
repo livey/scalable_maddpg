@@ -9,3 +9,4 @@ salable multi agent reinforcement learning
 5. rearrange main.py
 - [] prey boundary problem
 - [x] this is a complete item
+- [ ] this is an incomplete item
