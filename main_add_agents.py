@@ -17,14 +17,14 @@ Env = envs.Environ(num_agents,max_edge)
 obs = Env.reset()
 current_state = obs
 
-max_episode = 200000
+max_episode = 1000000
 done_epoch = 0
 #print(current_state)
 max_epoch = 1000
 
 catch_time = []
 
-add_time = 100000
+add_time = 500000
 
 for episode in range(add_time):
     print('episode',episode)
