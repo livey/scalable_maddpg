@@ -5,7 +5,7 @@ salable multi agent reinforcement learning
 1. tune L2
 2. fix environments
 3. fix rewards
-4. decrease the frequency of summaries
-5. rearrange main.py
+- [x] decrease the frequency of summaries
+- [x] rearrange main.py
 - [ ] prey boundary problem
 - [ ] modify the initial position of the agents and prey
