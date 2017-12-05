@@ -6,7 +6,7 @@ import math
 agent_size = .2
 adver_size = .2
 agent_speed = .1
-adver_speed = .3
+adver_speed = .2
 
 class Scenario(BaseScenario):
     def __init__(self, numOfadversaries, max_edge):
@@ -72,7 +72,7 @@ class Scenario(BaseScenario):
             for a in ag:
                 for aa in ad:
                     dis=np.sqrt(np.sum(np.square(aa.state.p_pos-a.state.p_pos)))
-                    if dis<adver_size+agent_size:
+                    if dis<1.1*(adver_size+agent_size):
                         aa.state.p_pos=np.random.uniform(-self.max_edge, +self.max_edge, world.dim_p)
                     else:
                         ii=ii+1
