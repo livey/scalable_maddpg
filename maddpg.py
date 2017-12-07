@@ -20,6 +20,7 @@ SUMMARY_BATCH_SIZE = 512
 
 class MaDDPG:
     def __init__(self,num_agents,state_dim,action_dim):
+        # track training times
         self.time_step = 0
         # use set session use GPU
         #self.sess = tf.InteractiveSession()
@@ -73,7 +74,7 @@ class MaDDPG:
         self.update_agents_target()
 
     def summary(self, record_num):
-        if self.time_step > SUMMARY_BATCH_SIZE:
+        if self.replay_buffer.count() > SUMMARY_BATCH_SIZE:
             mini_batch = self.replay_buffer.get_batch(SUMMARY_BATCH_SIZE)
             state_batch = np.zeros((SUMMARY_BATCH_SIZE, self.num_agents, self.state_dim))
             for ii in range(SUMMARY_BATCH_SIZE):
@@ -120,7 +121,7 @@ class MaDDPG:
         #self.replay_buffer = ReplayBuffer(REPLAY_BUFFER_SIZE)
         self.replay_buffer.erase()
         # reset the time step
-        self.time_step = 0
+        # self.time_step = 0
 
 
     def action(self,state): # here is action, for one state on agent, not batch_sized actions
