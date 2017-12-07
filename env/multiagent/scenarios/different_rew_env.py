@@ -155,19 +155,19 @@ class Scenario(BaseScenario):
                         collide_agent[adv.index] +=1
             if collide_time==1:
                 rew = np.zeros((self.num_adversaries, 1))
-                for jj in range(num_agent-1):
+                for jj in range(self.num_agents-1):
                     if collide_agent[jj]>0:
                         if jj%2==0:
-                            rew=3
+                            rew+=3
                             rew[jj] +=1
                         else:
-                            rew=1
+                            rew+=1
                             rew[jj] +=1
             if collide_time>1:
-                rew = np.zeros((self.num_adversaries, 1))+2
-                for jj in range(num_agent - 1):
+                rew = np.zeros((self.num_adversaries, 1))+2.5
+                for jj in range(self.num_agents - 1):
                     if collide_agent[jj] > 0:
-                        rew[jj] +=0
+                        rew[jj] +=0.5
 
 
         for adv in adversaries:
