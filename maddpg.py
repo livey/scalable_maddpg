@@ -110,16 +110,22 @@ class MaDDPG:
 
     def add_agents(self,add_num):
         for ii in range(add_num):
-            self.num_agents+=1
+            #self.num_agents+=1
 
             agent_name = 'agent'+ str(self.num_agents)
             self.agents.append(ActorNetwork(self.sess,self.state_dim,self.action_dim,
                                             agent_name, self.agents[-1].nets))
+            # the agents' name is from 0-num_agents-1 
+            self.num_agents+=1
 
         # if add a new agent then reset the noise and replay buffer
         self.exploration_noise = OUNoise((self.num_agents, self.action_dim))
         #self.replay_buffer = ReplayBuffer(REPLAY_BUFFER_SIZE)
         self.replay_buffer.erase()
+        # re-create a saver 
+        # the new saver will contains all the savable variables.
+        # otherwise only contains the initially created agents
+        self.saver = tf.train.Saver()
         # reset the time step
         # self.time_step = 0
 
