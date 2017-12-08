@@ -10,3 +10,4 @@ salable multi agent reinforcement learning
 - [x] prey boundary problem
 - [x] modify the initial position of the agents and prey
 - [ ] add another network for prey
+- [ ] add summary for rewards of each episode
