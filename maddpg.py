@@ -75,7 +75,7 @@ class MaDDPG:
 
     def summary(self, record_num):
         if self.replay_buffer.count() > SUMMARY_BATCH_SIZE:
-            mini_batch = self.replay_buffer.get_batch(SUMMARY_BATCH_SIZE)
+            mini_batch = self.replay_buffer.popn(SUMMARY_BATCH_SIZE)
             state_batch = np.zeros((SUMMARY_BATCH_SIZE, self.num_agents, self.state_dim))
             for ii in range(SUMMARY_BATCH_SIZE):
                 state_batch[ii,:,:] = mini_batch[ii][0]
