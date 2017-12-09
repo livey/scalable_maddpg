@@ -1,4 +1,5 @@
 from collections import deque
+import itertools
 import random
 
 class ReplayBuffer(object):
@@ -32,3 +33,7 @@ class ReplayBuffer(object):
     def erase(self):
         self.buffer = deque()
         self.num_experiences = 0
+
+    # pop n elements from the right (most recent)
+    def popn(self,num):
+        return list(itertools.islice(self.buffer, self.count()-num, self.count()))

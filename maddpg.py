@@ -20,6 +20,7 @@ SUMMARY_BATCH_SIZE = 512
 
 class MaDDPG:
     def __init__(self,num_agents,state_dim,action_dim):
+        # track training times
         self.time_step = 0
         # use set session use GPU
         #self.sess = tf.InteractiveSession()
@@ -73,8 +74,8 @@ class MaDDPG:
         self.update_agents_target()
 
     def summary(self, record_num):
-        if self.time_step > SUMMARY_BATCH_SIZE:
-            mini_batch = self.replay_buffer.get_batch(SUMMARY_BATCH_SIZE)
+        if self.replay_buffer.count() > SUMMARY_BATCH_SIZE:
+            mini_batch = self.replay_buffer.popn(SUMMARY_BATCH_SIZE)
             state_batch = np.zeros((SUMMARY_BATCH_SIZE, self.num_agents, self.state_dim))
             for ii in range(SUMMARY_BATCH_SIZE):
                 state_batch[ii,:,:] = mini_batch[ii][0]
@@ -109,18 +110,24 @@ class MaDDPG:
 
     def add_agents(self,add_num):
         for ii in range(add_num):
-            self.num_agents+=1
+            #self.num_agents+=1
 
             agent_name = 'agent'+ str(self.num_agents)
             self.agents.append(ActorNetwork(self.sess,self.state_dim,self.action_dim,
                                             agent_name, self.agents[-1].nets))
+            # the agents' name is from 0-num_agents-1 
+            self.num_agents+=1
 
         # if add a new agent then reset the noise and replay buffer
         self.exploration_noise = OUNoise((self.num_agents, self.action_dim))
         #self.replay_buffer = ReplayBuffer(REPLAY_BUFFER_SIZE)
         self.replay_buffer.erase()
+        # re-create a saver 
+        # the new saver will contains all the savable variables.
+        # otherwise only contains the initially created agents
+        self.saver = tf.train.Saver()
         # reset the time step
-        self.time_step = 0
+        # self.time_step = 0
 
 
     def action(self,state): # here is action, for one state on agent, not batch_sized actions

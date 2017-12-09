@@ -55,8 +55,8 @@ for episode in range(add_time):
         print('Time up >>>>>>>>>>>>>>')
 
 # add one more agent into the system
-maddpg.add_agents(1)
-num_agents +=1
+maddpg.add_agents(3)
+num_agents +=3
 
 # reset the environment
 current_state = Env.re_create_env(num_agents)
