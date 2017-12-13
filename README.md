@@ -2,7 +2,7 @@
 salable multi agent reinforcement learning
 
 ## to do list
-- [ ] tune L2, does LSTM parameters need L2 regulizer?
+- [x] tune L2, does LSTM parameters need L2 regulizer?
 - [x] fix environments
 - [x] fix rewards
 - [x] decrease the frequency of summaries
