@@ -4,11 +4,11 @@ import math
 
 # target updating rate
 TAU = .001
-L2 = .01
+L2 = .0001
 LEARNING_RATE = 1e-3
-preLayer1Size = 10
-preLayer2Size = 10
-sufLayerSize = 10
+preLayer1Size = 20
+preLayer2Size = 20
+sufLayerSize = 20
 SUMMARY_DIR ='summaries/'
 
 class CriticNetwork:
