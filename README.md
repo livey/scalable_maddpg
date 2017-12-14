@@ -19,6 +19,5 @@ Here, we have done two independent runs. In each run, from episode 1 to episodes
 
 ## Demo results
 In this demon, the prey walks randomly. Agents learn to catch the prey. 
-![image](https://github.com/livey/scalable_maddpg/blob/master/Notes/replay.gif)
 
 <img src="https://github.com/livey/scalable_maddpg/blob/master/Notes/replay.gif" width="500"  />
