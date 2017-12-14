@@ -15,8 +15,10 @@ salable multi agent reinforcement learning
 ## Results
 Here, we have done two independent runs. In each run, from episode 1 to episodes 3x10^4, three agents were in the game. At episode 3x10^4, we added three more agents into this game. Here we show the mean Q value of all the agents in our experiments. 
 
-<img src="https://github.com/livey/scalable_maddpg/blob/master/Notes/fig1.png" width="400"  />
+<img src="https://github.com/livey/scalable_maddpg/blob/master/Notes/fig1.png" width="500"  />
 
 ## Demo results
 In this demon, the prey walks randomly. Agents learn to catch the prey. 
 ![image](https://github.com/livey/scalable_maddpg/blob/master/Notes/replay.gif)
+
+<img src="https://github.com/livey/scalable_maddpg/blob/master/Notes/replay.gif" width="500"  />
