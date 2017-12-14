@@ -15,3 +15,6 @@ salable multi agent reinforcement learning
 ## results
 Here, we have done two independent runs. In each run, from episode 1 to episodes 3x10^4, three agents were in the game. At episode 3x10^4, we added three more agents into this game. Here we show the mean Q value of all the agents in our experiments. 
 ![image](https://github.com/livey/scalable_maddpg/blob/master/Notes/fig1.png)
+
+### demon results
+![image](https://github.com/livey/scalable_maddpg/blob/master/Notes/replay.gif)
