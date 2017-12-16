@@ -151,7 +151,7 @@ class MaDDPG:
         # the state size  is batch_size* num_agents * state_dimension
         actions = np.zeros((state_batch.shape[0],self.num_agents,self.action_dim))
         for ii in range(self.num_agents):
-            actions[:,ii,:] = self.agents[ii].actions(state_batch[:,ii,:])
+            actions[:,ii,:] = self.agents[ii].target_actions(state_batch[:,ii,:])
         return  actions
 
     def noise_action(self,state):
