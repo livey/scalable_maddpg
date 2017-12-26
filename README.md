@@ -1,5 +1,5 @@
 # scalable_maddpg
-salable multi agent reinforcement learning
+salable multi agent reinforcement learning. Details can be found in the report [Report](scalable-multi-agent.pdf)
 
 ## to do list
 - [x] tune L2, does LSTM parameters need L2 regulizer?
