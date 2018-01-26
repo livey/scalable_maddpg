@@ -12,7 +12,7 @@ scalable multi agent reinforcement learning. Details can be found in the report 
 - [ ] add another network for prey
 - [ ] add summary for rewards of each episode
 ## Alternative to Gym
-An alternative of Gym environment is create (env.py). The rendering implementation of the envrionment is matplot. So, it would be much easier to use.  
+An alternative of Gym environment is created (env.py). The rendering implementation of the envrionment is matplot. So, it would be much easier to use.  
 ## Results
 Here, we have done two independent runs. In each run, from episode 1 to episodes 3x10^4, three agents were in the game. At episode 3x10^4, we added three more agents into this game. Here we show the mean Q value of all the agents in our experiments. 
 
